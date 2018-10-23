@@ -6,10 +6,7 @@ namespace Training.CSharp7
     {
         private readonly ILogger _logger;
 
-        public NumericLiterals(ILogger logger)
-        {
-            _logger = logger;
-        }
+        public NumericLiterals(ILogger logger) => _logger = logger;
 
         public int Sum()
         {

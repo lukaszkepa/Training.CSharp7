@@ -7,11 +7,7 @@ namespace Training.CSharp7
     public class RefSemantics
     {
         private readonly ILogger _logger;
-
-        public RefSemantics(ILogger logger)
-        {
-            _logger = logger;
-        }
+        public RefSemantics(ILogger logger) => _logger = logger;
 
         public long SumAreas(in Rectangle rect1, in Rectangle rect2)
         {

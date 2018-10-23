@@ -9,10 +9,7 @@ namespace Training.CSharp7
     {
         private readonly ILogger _logger;
 
-        public PatternMatching(ILogger logger)
-        {
-            _logger = logger;
-        }
+        public PatternMatching(ILogger logger) => _logger = logger;
 
         public int ParseInt(string s)
         {
@@ -23,7 +20,7 @@ namespace Training.CSharp7
             }
             catch (Exception e)
             {
-                if (e.GetType() == typeof(ArgumentNullException))
+                if (e is ArgumentNullException)
                 {
                     _logger.Write("ParseInt: ArgumentNullException has been thrown. Exception: {0}", e);
                 }
@@ -44,17 +41,20 @@ namespace Training.CSharp7
             var filteredValues = new List<string>(values.Length);
             foreach (var item in values)
             {
-                if (item is string s)
+                switch (item)
                 {
-                    filteredValues.Add(s);
-                }
-                else if (item is IEnumerable<string> multiS && multiS.Any())
-                {
-                    filteredValues.Add(string.Join(string.Empty, multiS));
-                }
-                else
-                {
-                    _logger.Write("Join String: skipping not supported value '{0}'", item);
+                    case string s:
+                        filteredValues.Add(s);
+                        break;
+                    case IEnumerable<string> multiS when multiS.Any():
+                        filteredValues.Add(string.Join(string.Empty, multiS));
+                        break;
+                    case null:
+                        _logger.Write("Join String: ingnored null");
+                        break;
+                    default:
+                        _logger.Write("Join String: skipping not supported value '{0}'", item);
+                        break;
                 }
             }
             var result = string.Join(separator, filteredValues);

@@ -7,10 +7,7 @@ namespace Training.CSharp7
     {
         private readonly ILogger _logger;
 
-        public StringAsSpan(ILogger logger)
-        {
-            _logger = logger;
-        }
+        public StringAsSpan(ILogger logger) => _logger = logger;
 
         public bool IsNullOrEmpty(string s)
         {
@@ -45,6 +42,7 @@ namespace Training.CSharp7
             Span<char> sUpper = stackalloc char[s.Length];
             s.AsSpan().ToUpperInvariant(sUpper);
             result = sUpper.ToString();
+
             sw.Stop();
 
             _logger.Write("ToUpper: '{0}'.AsSpan() => '{1}'. Completed in {2}.", s, result, sw.Elapsed);
